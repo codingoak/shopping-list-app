@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Searchbar from "./Searchbar.js";
 import SearchItem from "./SearchItem.js";
 
-function App() {
+export default function App() {
   const [items, setItems] = useState([]);
   const [hasError, setHasError] = useState(false);
 
@@ -32,6 +32,18 @@ function App() {
     }
   }
 
+  // const [dataOfItems, setDataOfItems] = useState([]);
+  // setDataOfItems(items.map((item) => {name: item.name.de, id: item.key._id}));
+  const [searchValue, setSearchValue] = useState("");
+
+  const filteredItems = items.filter((item) => {
+    if (searchValue === "") {
+      return "";
+    } else {
+      return item.name.de.toLowerCase().includes(searchValue.toLowerCase());
+    }
+  });
+
   return (
     <div className="App">
       <h1 className="App-header">Shopping List</h1>
@@ -42,17 +54,15 @@ function App() {
           <li>Pineapple</li>
         </ul>
       </section>
-      <Searchbar />
+      <Searchbar setSearchValue={setSearchValue} />
       <section className="recentlyItems">
         <p></p>
         <ul>
-          {items.map((item) => (
-            <SearchItem text={item.name.de} />
+          {filteredItems.map((item) => (
+            <SearchItem key={item._id} text={item.name.de} />
           ))}
         </ul>
       </section>
     </div>
   );
 }
-
-export default App;
