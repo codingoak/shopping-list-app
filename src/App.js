@@ -1,6 +1,8 @@
 // import styled from "styled-components/macro";
 import { useState } from "react";
 import { useEffect } from "react";
+import Searchbar from "./Searchbar.js";
+import SearchItem from "./SearchItem.js";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -30,8 +32,6 @@ function App() {
     }
   }
 
-  console.log(items);
-
   return (
     <div className="App">
       <h1 className="App-header">Shopping List</h1>
@@ -42,15 +42,13 @@ function App() {
           <li>Pineapple</li>
         </ul>
       </section>
-      <div>
-        <h2>What do you want to buy?</h2>
-        <input type="search"></input>
-      </div>
+      <Searchbar />
       <section className="recentlyItems">
         <p></p>
         <ul>
-          <li>Banana</li>
-          <li>Mango</li>
+          {items.map((item) => (
+            <SearchItem text={item.name.de} />
+          ))}
         </ul>
       </section>
     </div>
