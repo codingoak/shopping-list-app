@@ -1,6 +1,7 @@
 // import styled from "styled-components/macro";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useImmer } from "use-immer";
 import Searchbar from "./Searchbar.js";
 import SearchItem from "./SearchItem.js";
 
@@ -14,9 +15,7 @@ export default function App() {
 
   async function loadItems() {
     try {
-      const response = await fetch(
-        "https://fetch-me.vercel.app/api/shopping/items"
-      );
+      const response = await fetch("https://fetch-me.vercel.app/api/shopping/items");
 
       if (response.ok) {
         // check, if there is "no 404"
@@ -34,8 +33,10 @@ export default function App() {
 
   // const [dataOfItems, setDataOfItems] = useState([]);
   // setDataOfItems(items.map((item) => {name: item.name.de, id: item.key._id}));
-  const [searchValue, setSearchValue] = useState("");
 
+  const [searchValue, setSearchValue] = useState("");
+  const [currentButton, setCurrentButton] = useState(new Set());
+  console.log(currentButton);
   const filteredItems = items.filter((item) => {
     if (searchValue === "") {
       return "";
@@ -59,7 +60,12 @@ export default function App() {
         <p></p>
         <ul>
           {filteredItems.map((item) => (
-            <SearchItem key={item._id} text={item.name.de} />
+            <SearchItem
+              key={item._id}
+              text={item.name.de}
+              currentButton={currentButton}
+              setCurrentButton={setCurrentButton}
+            />
           ))}
         </ul>
       </section>
