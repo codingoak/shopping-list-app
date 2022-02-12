@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function Searchbar({ setSearchValue }) {
   return (
     <>
@@ -7,7 +5,7 @@ export default function Searchbar({ setSearchValue }) {
       <label>
         <input
           type="search"
-          onChange={(event) => {
+          onChange={event => {
             setSearchValue(event.target.value);
           }}
         ></input>

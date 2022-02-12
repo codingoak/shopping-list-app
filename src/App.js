@@ -39,8 +39,10 @@ export default function App() {
   itemNames = new Set(itemNames);
   const searcher = new Searcher(itemNames, { ignoreCase: true });
   const filteredFuzzyItems = searcher.search(searchValue);
+  const newFilteredFuzzyItems = filteredFuzzyItems.filter(
+    fuzzyItem => !currentButton.includes(fuzzyItem)
+  );
 
-  console.log(currentButton);
   return (
     <div className="App">
       <h1 className="App-header">Shopping List</h1>
@@ -53,7 +55,7 @@ export default function App() {
       <section className="recentlyItems">
         <p></p>
         <ul>
-          {filteredFuzzyItems.map(item => (
+          {newFilteredFuzzyItems.map(item => (
             <SearchItem
               key={item}
               text={item}
