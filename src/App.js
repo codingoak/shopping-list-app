@@ -1,16 +1,16 @@
 // import styled from "styled-components/macro";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useImmer } from "use-immer";
-import Searchbar from "./Searchbar.js";
-import SearchItem from "./SearchItem.js";
+import { useState, useEffect } from 'react';
+import Searchbar from './Searchbar.js';
+import SearchItem from './SearchItem.js';
 
 export default function App() {
   const [items, setItems] = useState([]);
   const [hasError, setHasError] = useState(false);
   const { Searcher } = require('fast-fuzzy');
-  const [searchValue, setSearchValue] = useState("");
-  const [currentButton, setCurrentButton] = useState(new Set());
+  const [searchValue, setSearchValue] = useState('');
+  const [currentButton, setCurrentButton] = useState([]);
+
+  console.log(currentButton);
 
   useEffect(() => {
     loadItems();
@@ -18,7 +18,9 @@ export default function App() {
 
   async function loadItems() {
     try {
-      const response = await fetch("https://fetch-me.vercel.app/api/shopping/items");
+      const response = await fetch(
+        'https://fetch-me.vercel.app/api/shopping/items'
+      );
 
       if (response.ok) {
         // check, if there is "no 404"
@@ -26,7 +28,7 @@ export default function App() {
         setItems(data.data);
       } else {
         // make code execution continue in catch block
-        throw new Error("404 - not found");
+        throw new Error('404 - not found');
       }
     } catch (error) {
       console.log(error.message);
@@ -34,27 +36,23 @@ export default function App() {
     }
   }
 
-  let itemNames = items.map(item => item.name.de)
+  let itemNames = items.map(item => item.name.de);
   itemNames = new Set(itemNames);
   const searcher = new Searcher(itemNames, { ignoreCase: true });
-  const filteredFuzzyItems = searcher.search(searchValue)
-  
+  const filteredFuzzyItems = searcher.search(searchValue);
 
   return (
     <div className="App">
       <h1 className="App-header">Shopping List</h1>
       <section className="addedItems">
-        <p></p>
-        <ul>
-          <li>Apple</li>
-          <li>Pineapple</li>
-        </ul>
+        {currentButton.map(item => console.log(item))}
+        <p>{currentButton}</p>
       </section>
       <Searchbar setSearchValue={setSearchValue} />
       <section className="recentlyItems">
         <p></p>
         <ul>
-          {filteredFuzzyItems.map((item) => (
+          {filteredFuzzyItems.map(item => (
             <SearchItem
               key={item}
               text={item}
