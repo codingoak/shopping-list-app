@@ -8,6 +8,9 @@ import SearchItem from "./SearchItem.js";
 export default function App() {
   const [items, setItems] = useState([]);
   const [hasError, setHasError] = useState(false);
+  const { Searcher } = require('fast-fuzzy');
+  const [searchValue, setSearchValue] = useState("");
+  const [currentButton, setCurrentButton] = useState(new Set());
 
   useEffect(() => {
     loadItems();
@@ -31,19 +34,11 @@ export default function App() {
     }
   }
 
-  // const [dataOfItems, setDataOfItems] = useState([]);
-  // setDataOfItems(items.map((item) => {name: item.name.de, id: item.key._id}));
-
-  const [searchValue, setSearchValue] = useState("");
-  const [currentButton, setCurrentButton] = useState(new Set());
-  console.log(currentButton);
-  const filteredItems = items.filter((item) => {
-    if (searchValue === "") {
-      return "";
-    } else {
-      return item.name.de.toLowerCase().includes(searchValue.toLowerCase());
-    }
-  });
+  let itemNames = items.map(item => item.name.de)
+  itemNames = new Set(itemNames);
+  const searcher = new Searcher(itemNames, { ignoreCase: true });
+  const filteredFuzzyItems = searcher.search(searchValue)
+  
 
   return (
     <div className="App">
@@ -59,10 +54,10 @@ export default function App() {
       <section className="recentlyItems">
         <p></p>
         <ul>
-          {filteredItems.map((item) => (
+          {filteredFuzzyItems.map((item) => (
             <SearchItem
-              key={item._id}
-              text={item.name.de}
+              key={item}
+              text={item}
               currentButton={currentButton}
               setCurrentButton={setCurrentButton}
             />
