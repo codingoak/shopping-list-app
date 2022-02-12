@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Searchbar from './Searchbar.js';
 import SearchItem from './SearchItem.js';
+import ShopingList from './ShopingList.js';
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -9,8 +10,6 @@ export default function App() {
   const { Searcher } = require('fast-fuzzy');
   const [searchValue, setSearchValue] = useState('');
   const [currentButton, setCurrentButton] = useState([]);
-
-  console.log(currentButton);
 
   useEffect(() => {
     loadItems();
@@ -41,12 +40,14 @@ export default function App() {
   const searcher = new Searcher(itemNames, { ignoreCase: true });
   const filteredFuzzyItems = searcher.search(searchValue);
 
+  console.log(currentButton);
   return (
     <div className="App">
       <h1 className="App-header">Shopping List</h1>
       <section className="addedItems">
-        {currentButton.map(item => console.log(item))}
-        <p>{currentButton}</p>
+        {currentButton.map(item => (
+          <ShopingList key={item} text={item} />
+        ))}
       </section>
       <Searchbar setSearchValue={setSearchValue} />
       <section className="recentlyItems">
