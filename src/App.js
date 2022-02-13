@@ -47,7 +47,13 @@ export default function App() {
       <h1 className="App-header">Shopping List</h1>
       <section className="addedItems">
         {currentButton.map(item => (
-          <ShopingList key={item} text={item} />
+          <ShopingList
+            key={item}
+            text={item}
+            setCurrentButton={setCurrentButton}
+            currentButton={currentButton}
+            id={item}
+          />
         ))}
       </section>
       <Searchbar setSearchValue={setSearchValue} />
