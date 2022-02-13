@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import Searchbar from './Searchbar.js';
 import SearchItem from './SearchItem.js';
 import ShopingList from './ShopingList.js';
+import styled from 'styled-components';
+import GlobalStyle from './styles/GlobalStyles.js';
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -54,7 +56,7 @@ export default function App() {
   );
 
   return (
-    <div className="App">
+    <AppContainer className="App">
       <h1 className="App-header">Shopping List</h1>
       <section className="addedItems">
         {currentButton.map(item => (
@@ -69,8 +71,6 @@ export default function App() {
       </section>
       <Searchbar setSearchValue={setSearchValue} searchValue={searchValue} />
       <section className="recentlyItems">
-        <p></p>
-        <ul>
           {newFilteredFuzzyItems == '' && !searchValue == '' ? (
             <p>could not find your food!</p>
           ) : (
@@ -85,8 +85,10 @@ export default function App() {
               />
             ))
           )}
-        </ul>
       </section>
-    </div>
+    </AppContainer>
   );
 }
+const AppContainer = styled.div `
+  
+`
