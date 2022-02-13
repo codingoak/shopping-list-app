@@ -15,6 +15,17 @@ export default function App() {
     loadItems();
   }, []);
 
+  //only run once the first time this component is rendered
+  useEffect(() => {
+    if (localStorage.getItem('shoping-list')) {
+      setCurrentButton(JSON.parse(localStorage.getItem('shoping-list')));
+    }
+  }, []);
+  // run every time our pet state changes
+  useEffect(() => {
+    localStorage.setItem('shoping-list', JSON.stringify(currentButton));
+  }, [currentButton]);
+
   async function loadItems() {
     try {
       const response = await fetch(
@@ -60,16 +71,20 @@ export default function App() {
       <section className="recentlyItems">
         <p></p>
         <ul>
-          {newFilteredFuzzyItems.map(item => (
-            <SearchItem
-              key={item}
-              text={item}
-              currentButton={currentButton}
-              setCurrentButton={setCurrentButton}
-              setSearchValue={setSearchValue}
-              searchValue={searchValue}
-            />
-          ))}
+          {newFilteredFuzzyItems == '' && !searchValue == '' ? (
+            <p>could not find your food!</p>
+          ) : (
+            newFilteredFuzzyItems.map(item => (
+              <SearchItem
+                key={item}
+                text={item}
+                currentButton={currentButton}
+                setCurrentButton={setCurrentButton}
+                setSearchValue={setSearchValue}
+                searchValue={searchValue}
+              />
+            ))
+          )}
         </ul>
       </section>
     </div>
