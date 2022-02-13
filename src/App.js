@@ -56,7 +56,7 @@ export default function App() {
           />
         ))}
       </section>
-      <Searchbar setSearchValue={setSearchValue} />
+      <Searchbar setSearchValue={setSearchValue} searchValue={searchValue} />
       <section className="recentlyItems">
         <p></p>
         <ul>
@@ -66,7 +66,8 @@ export default function App() {
               text={item}
               currentButton={currentButton}
               setCurrentButton={setCurrentButton}
-              // setSearchValue={setSearchValue}
+              setSearchValue={setSearchValue}
+              searchValue={searchValue}
             />
           ))}
         </ul>

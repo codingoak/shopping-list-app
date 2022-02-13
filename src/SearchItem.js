@@ -4,11 +4,12 @@ export default function SearchItem({
   text,
   currentButton,
   setCurrentButton,
-  // setSearchValue,
+  setSearchValue,
+  searchValue,
 }) {
   function handleClick() {
     setCurrentButton([...currentButton, text]);
-    // setSearchValue('');
+    setSearchValue('');
   }
 
   return <Button onClick={handleClick}>{text}</Button>;
