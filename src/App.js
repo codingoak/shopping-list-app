@@ -20,7 +20,6 @@ export default function App() {
       const response = await fetch(
         'https://fetch-me.vercel.app/api/shopping/items'
       );
-
       if (response.ok) {
         // check, if there is "no 404"
         const data = await response.json();
@@ -61,6 +60,7 @@ export default function App() {
               text={item}
               currentButton={currentButton}
               setCurrentButton={setCurrentButton}
+              // setSearchValue={setSearchValue}
             />
           ))}
         </ul>
