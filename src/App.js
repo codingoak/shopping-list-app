@@ -4,27 +4,22 @@ import Searchbar from './Searchbar.js';
 import SearchItem from './SearchItem.js';
 import ShoppingList from './ShoppingList.js';
 import styled from 'styled-components';
+import useLocalStorage from './hooks/useLocalStorage.js';
+import useToggle from './hooks/useToggle.js';
 
 export default function App() {
   const [items, setItems] = useState([]);
   const [hasError, setHasError] = useState(false);
   const { Searcher } = require('fast-fuzzy');
   const [searchValue, setSearchValue] = useState('');
-  const [shoppingListItem, setShoppingListItem] = useState([]);
+  const [shoppingListItem, setShoppingListItem] = useLocalStorage(
+    'Shopping-list',
+    []
+  );
 
   useEffect(() => {
     loadItems();
   }, []);
-
-  useEffect(() => {
-    if (localStorage.getItem('Shopping-list')) {
-      setShoppingListItem(JSON.parse(localStorage.getItem('Shopping-list')));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('Shopping-list', JSON.stringify(shoppingListItem));
-  }, [shoppingListItem]);
 
   async function loadItems() {
     try {
@@ -44,8 +39,9 @@ export default function App() {
       setHasError(true);
     }
   }
-
-  let itemNames = items.map(item => item.name.de);
+  const [toggleLanguage, setToggleLanguage] = useToggle();
+  const [language, setLanguage] = useState('de');
+  let itemNames = items.map(item => item.name[language]);
   itemNames = new Set(itemNames);
   const searcher = new Searcher(itemNames, { ignoreCase: true });
   const filteredFuzzyItems = searcher.search(searchValue);
@@ -53,9 +49,22 @@ export default function App() {
     fuzzyItem => !shoppingListItem.includes(fuzzyItem)
   );
 
+  function handleToggle() {
+    if (toggleLanguage === false) {
+      setLanguage('en');
+      setToggleLanguage();
+    } else {
+      setLanguage('de');
+      setToggleLanguage();
+    }
+  }
+
+  console.log(language, toggleLanguage);
+
   return (
     <AppContainer className="App">
       <h1 className="App-header">Shopping List</h1>
+      <button onClick={handleToggle}>current language: {language}</button>
       <section className="addedItems">
         {shoppingListItem.map(item => (
           <ShoppingList
