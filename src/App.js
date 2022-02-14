@@ -4,7 +4,6 @@ import Searchbar from './Searchbar.js';
 import SearchItem from './SearchItem.js';
 import ShopingList from './ShopingList.js';
 import styled from 'styled-components';
-import GlobalStyle from './styles/GlobalStyles.js';
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -71,24 +70,22 @@ export default function App() {
       </section>
       <Searchbar setSearchValue={setSearchValue} searchValue={searchValue} />
       <section className="recentlyItems">
-          {newFilteredFuzzyItems == '' && !searchValue == '' ? (
-            <p>could not find your food!</p>
-          ) : (
-            newFilteredFuzzyItems.map(item => (
-              <SearchItem
-                key={item}
-                text={item}
-                currentButton={currentButton}
-                setCurrentButton={setCurrentButton}
-                setSearchValue={setSearchValue}
-                searchValue={searchValue}
-              />
-            ))
-          )}
+        {newFilteredFuzzyItems === '' && !searchValue === '' ? (
+          <p>could not find your food!</p>
+        ) : (
+          newFilteredFuzzyItems.map(item => (
+            <SearchItem
+              key={item}
+              text={item}
+              currentButton={currentButton}
+              setCurrentButton={setCurrentButton}
+              setSearchValue={setSearchValue}
+              searchValue={searchValue}
+            />
+          ))
+        )}
       </section>
     </AppContainer>
   );
 }
-const AppContainer = styled.div `
-  
-`
+const AppContainer = styled.div``;

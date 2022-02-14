@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export default function ShopingList({
   text,
@@ -10,20 +10,20 @@ export default function ShopingList({
 
   function handleClick() {
     // setCurrentButton(currentButton.filter(item => item != id));
-    setCurrentButton(prev => prev.filter(item => item != id));
+    setCurrentButton(prev => prev.filter(item => item !== id));
   }
 }
 
 const Button = styled.button`
-background-color: papayawhip;
-border: 2px solid black;
-border-radius: 10px;
-padding: 0.5rem;
-margin: 5px;
+  background-color: papayawhip;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin: 5px;
 
-&:active {
-  opacity: 0.8;
-  transform: scale(1.1);
-  transition:  0.1s
-}
-`
+  &:active {
+    opacity: 0.8;
+    transform: scale(1.1);
+    transition: 0.1s;
+  }
+`;
