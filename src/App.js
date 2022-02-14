@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Searchbar from './Searchbar.js';
 import SearchItem from './SearchItem.js';
-import ShopingList from './ShopingList.js';
+import ShoppingList from './ShoppingList.js';
 import styled from 'styled-components';
 
 export default function App() {
@@ -16,15 +16,14 @@ export default function App() {
     loadItems();
   }, []);
 
-  //only run once the first time this component is rendered
   useEffect(() => {
-    if (localStorage.getItem('shoping-list')) {
-      setCurrentButton(JSON.parse(localStorage.getItem('shoping-list')));
+    if (localStorage.getItem('Shopping-list')) {
+      setCurrentButton(JSON.parse(localStorage.getItem('Shopping-list')));
     }
   }, []);
-  // run every time our pet state changes
+
   useEffect(() => {
-    localStorage.setItem('shoping-list', JSON.stringify(currentButton));
+    localStorage.setItem('Shopping-list', JSON.stringify(currentButton));
   }, [currentButton]);
 
   async function loadItems() {
@@ -59,7 +58,7 @@ export default function App() {
       <h1 className="App-header">Shopping List</h1>
       <section className="addedItems">
         {currentButton.map(item => (
-          <ShopingList
+          <ShoppingList
             key={item}
             text={item}
             setCurrentButton={setCurrentButton}
