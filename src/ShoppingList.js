@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export default function ShoppingList({ text, id, setCurrentButton }) {
+export default function ShoppingList({ text, id, setShoppingListItem }) {
   return <Button onClick={handleClick}>{text}</Button>;
 
   function handleClick() {
-    setCurrentButton(prev => prev.filter(item => item !== id));
+    setShoppingListItem(prev => prev.filter(item => item !== id));
   }
 }
 

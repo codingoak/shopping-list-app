@@ -10,7 +10,7 @@ export default function App() {
   const [hasError, setHasError] = useState(false);
   const { Searcher } = require('fast-fuzzy');
   const [searchValue, setSearchValue] = useState('');
-  const [currentButton, setCurrentButton] = useState([]);
+  const [shoppingListItem, setShoppingListItem] = useState([]);
 
   useEffect(() => {
     loadItems();
@@ -18,13 +18,13 @@ export default function App() {
 
   useEffect(() => {
     if (localStorage.getItem('Shopping-list')) {
-      setCurrentButton(JSON.parse(localStorage.getItem('Shopping-list')));
+      setShoppingListItem(JSON.parse(localStorage.getItem('Shopping-list')));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('Shopping-list', JSON.stringify(currentButton));
-  }, [currentButton]);
+    localStorage.setItem('Shopping-list', JSON.stringify(shoppingListItem));
+  }, [shoppingListItem]);
 
   async function loadItems() {
     try {
@@ -50,34 +50,35 @@ export default function App() {
   const searcher = new Searcher(itemNames, { ignoreCase: true });
   const filteredFuzzyItems = searcher.search(searchValue);
   const newFilteredFuzzyItems = filteredFuzzyItems.filter(
-    fuzzyItem => !currentButton.includes(fuzzyItem)
+    fuzzyItem => !shoppingListItem.includes(fuzzyItem)
   );
 
   return (
     <AppContainer className="App">
       <h1 className="App-header">Shopping List</h1>
       <section className="addedItems">
-        {currentButton.map(item => (
+        {shoppingListItem.map(item => (
           <ShoppingList
             key={item}
             text={item}
-            setCurrentButton={setCurrentButton}
-            currentButton={currentButton}
+            setShoppingListItem={setShoppingListItem}
+            shoppingListItem={shoppingListItem}
             id={item}
           />
         ))}
       </section>
       <Searchbar setSearchValue={setSearchValue} searchValue={searchValue} />
+      {hasError && <p>Error: could not load shopping items</p>}
       <section className="recentlyItems">
-        {newFilteredFuzzyItems === '' && !searchValue === '' ? (
+        {newFilteredFuzzyItems.length === 0 && searchValue !== '' ? (
           <p>could not find your food!</p>
         ) : (
           newFilteredFuzzyItems.map(item => (
             <SearchItem
               key={item}
               text={item}
-              currentButton={currentButton}
-              setCurrentButton={setCurrentButton}
+              shoppingListItem={shoppingListItem}
+              setShoppingListItem={setShoppingListItem}
               setSearchValue={setSearchValue}
               searchValue={searchValue}
             />

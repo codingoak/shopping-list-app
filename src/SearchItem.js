@@ -2,12 +2,12 @@ import styled from 'styled-components/macro';
 
 export default function SearchItem({
   text,
-  currentButton,
-  setCurrentButton,
+  shoppingListItem,
+  setShoppingListItem,
   setSearchValue,
 }) {
   function handleClick() {
-    setCurrentButton([...currentButton, text]);
+    setShoppingListItem([...shoppingListItem, text]);
     setSearchValue('');
   }
 
