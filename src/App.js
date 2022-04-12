@@ -40,9 +40,11 @@ export default function App() {
   console.log(language, toggleLanguage);
 
   return (
-    <AppContainer className="App">
+    <>
       <h1 className="App-header">Shopping List</h1>
-      <button onClick={handleToggle}>current language: {language}</button>
+      <StyledButton onClick={handleToggle}>
+        current language: {language}
+      </StyledButton>
       <section className="addedItems">
         {shoppingListItem.map(item => (
           <ShoppingList
@@ -72,7 +74,21 @@ export default function App() {
           ))
         )}
       </section>
-    </AppContainer>
+    </>
   );
 }
-const AppContainer = styled.div``;
+
+const StyledButton = styled.button`
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  :hover {
+    cursor: pointer;
+    scale: 1.05;
+    color: white;
+    background-color: black;
+  }
+  :active {
+    scale: 0.95;
+  }
+`;

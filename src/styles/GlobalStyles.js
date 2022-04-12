@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
   background-color: lightgreen;
-  margin: 0;
+  margin: 20px;
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
