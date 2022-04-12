@@ -21,9 +21,15 @@ export default function Searchbar({ setSearchValue, searchValue }) {
 }
 
 const SearchbarContainer = styled.div`
-  margin: 10px;
+  margin: 10px 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0 10px 10px;
 
   input {
     width: 200px;
+    height: 1.5rem;
+    border: none;
+    border-radius: 3px;
   }
 `;
